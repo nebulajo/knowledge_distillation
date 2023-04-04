@@ -6,20 +6,22 @@ paper : Distilling the Knowledge in a Neural Network
 
 Knowledge distillation에서는 softmax 함수 결과를 그대로 사용한다. 일반적으로 분류 모델을 학습할 때 softmax 함수의 결과로 각 클래스에 대한 확률값이 출력되지만 이후 가장 높은 확률값의 index를 1, 그 외에는 0으로 처리하게 된다. 논문에서는 0으로 처리되는 클래스 확률 자체도 의미가 있기 때문에 이를 같이 학습할 수 있도록 구성한다.
 
+<img width="706" alt="스크린샷 2023-04-04 오후 10 31 29" src="https://user-images.githubusercontent.com/126544082/229809213-c77638d6-ea0c-4d18-843c-68108a7ca277.png">
 Ref : https://intellabs.github.io/distiller/knowledge_distillation.html
 
 ### Distillation
+
+<img width="260" alt="스크린샷 2023-04-04 오후 7 55 34" src="https://user-images.githubusercontent.com/126544082/229809231-0b8506de-004f-4467-8c86-be0229f4ea61.png">
 
 Teacher model의 softmax 값을 T(Temperature)로 나눠서 softmax를 다시 한 번 취한다. **T 값이 높아질 수록 출력값이 soft 해지는데 이는 출력 분포의 형태가 뾰족하지 않고 점차 균등한 것을 의미한다.** 원 핫 벡터 형태가 아니더라도 특정 클래스의 확률이 차이나게 높을 수 있기 때문에 이를 보완할 수 있다. 논문에서는 웟 핫 벡터 형식의 label을 hard label, softmax를 거친 확률값 형태를 soft label이라고 정의한다.
 * soft label : softmax 결과, 확률 값 ex) [0.10, 0.20, 0.70]
 * hard label : softmax 결과에서 원 핫 벡터 형식으로 바꾼 것 ex) [0, 0, 1]
 
-
 ### objective function
 
 여기서 objective function은 loss function으로 이해해도 된다. knowledge distillation을 구현하기 위해서는 loss function이 크게 두 가지로 구성되며 다음과 같다.
 
-* first objective(distillation loss) : teacher model과 student model 간의 soft label 차이(KLD로 구현)
+* first objective(distillation loss) : teacher model과 student model 간의 soft label 차이(KLD로 구현) 
 * second objective(student loss) : student model과 label 간의 hard label 차이
 
 두 loss function에 대해서 weighted sum한 결과가 가장 성능이 좋다고 한다. 
