@@ -17,8 +17,8 @@ Teacher model의 softmax 값을 T(Temperature)로 나눠서 softmax를 다시 �
 
 여기서 objective function은 loss function으로 이해해도 된다. knowledge distillation을 구현하기 위해서는 loss function이 크게 두 가지로 구성되며 다음과 같다.
 
-* first objective : teacher model과 student model 간의 soft label 차이(KLD로 구현)
-* second objective : student model과 label 간의 hard label 차이
+* first objective(distillation loss) : teacher model과 student model 간의 soft label 차이(KLD로 구현)
+* second objective(student loss) : student model과 label 간의 hard label 차이
 
 두 loss function에 대해서 weighted sum한 결과가 가장 성능이 좋다고 한다. 
 
@@ -30,12 +30,12 @@ def distillation_loss(student_scores, targets, teacher_scores, T, alpha):
     # targets : labels
     # teacher_scores: teacher model outputs (soft label)
 
-    loss1 = nn.KLDivLoss()(F.log_softmax(student_scores/T), F.softmax(teacher_scores/T)) * (T*T * 2.0 + alpha) 
-    loss2 = F.cross_entropy(student_scores,targets) * (1.-alpha)
+    distillation_loss = nn.KLDivLoss()(F.log_softmax(student_scores/T), F.softmax(teacher_scores/T))  
+    student_loss = F.cross_entropy(student_scores,targets) 
 
-    return loss1 + loss2
+    # distillation_loss, student_loss의 weighted sum으로 계산
+    return distillation_loss*(T*T * 2.0 + alpha) + loss2*(1.-alpha)
 ```
-
 
 ## Experiment
 
