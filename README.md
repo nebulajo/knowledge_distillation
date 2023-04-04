@@ -42,11 +42,10 @@ def distillation_loss(student_scores, targets, teacher_scores, T, alpha):
 ```
 
 ## Experiment
+본 실험은 CIFAR10 데이터셋으로 진행하였다. ResNet34의 경우 85% 가량의 test acc가 나온다. 본 실험에서는 Augmentation을 추가로 하지 않고, Knowledge Distillation을 통해 CIFAR10 데이터셋에 대해서 ResNet38 모델의 test acc를 85%보다 더 높은 성능이 나타나도록 실험을 진행한다. Teacher Model의 경우 ImageNet으로 사전학습된 ViT(vit_base_patch16_224)으로 구성하고, Student Model의 경우 ImageNet으로 사전학습된 ResNet38 모델로 구성한다. 
 
-CIFAR10 데이터셋에 대해서 ResNet34의 경우 85% 가량의 test acc가 나온다. 본 실험에서는 Augmentation을 추가로 하지 않고, Knowledge Distillation을 통해 CIFAR10 데이터셋에 대해서 ResNet38 모델의 test acc를 85%보다 더 높은 성능이 나타나도록 실험을 진행한다. Teacher Model의 경우 ImageNet으로 사전학습된 ViT(vit_small_patch32_224)으로 구성하고, Student Model의 경우 ImageNet으로 사전학습된 ResNet38 모델로 구성한다. 
-
-- Teacher Model : ViT(vit_base_patch16_224) pretrained by ImageNet
-    - Param : 22.2M
+- Teacher Model : ViT(vit_base_patch16_224) pretrained by ImageNet 
+    - Param : 86M
 - Student Model : ResNet34 pretrained by ImageNet
     - Param : 21.5M
 
