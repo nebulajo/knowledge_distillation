@@ -6,6 +6,8 @@ paper : Distilling the Knowledge in a Neural Network
 
 Knowledge distillation에서는 softmax 함수 결과를 그대로 사용한다. 일반적으로 분류 모델을 학습할 때 softmax 함수의 결과로 각 클래스에 대한 확률값이 출력되지만 이후 가장 높은 확률값의 index를 1, 그 외에는 0으로 처리하게 된다. 논문에서는 0으로 처리되는 클래스 확률 자체도 의미가 있기 때문에 이를 같이 학습할 수 있도록 구성한다.
 
+Ref : https://intellabs.github.io/distiller/knowledge_distillation.html
+
 ### Distillation
 
 Teacher model의 softmax 값을 T(Temperature)로 나눠서 softmax를 다시 한 번 취한다. **T 값이 높아질 수록 출력값이 soft 해지는데 이는 출력 분포의 형태가 뾰족하지 않고 점차 균등한 것을 의미한다.** 원 핫 벡터 형태가 아니더라도 특정 클래스의 확률이 차이나게 높을 수 있기 때문에 이를 보완할 수 있다. 논문에서는 웟 핫 벡터 형식의 label을 hard label, softmax를 거친 확률값 형태를 soft label이라고 정의한다.
