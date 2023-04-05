@@ -38,7 +38,7 @@ def distillation_loss(student_scores, targets, teacher_scores, T, alpha):
     student_loss = F.cross_entropy(student_scores,targets) 
 
     # distillation_loss, student_loss의 weighted sum으로 계산
-    return distillation_loss*(T*T * 2.0 + alpha) + loss2*(1.-alpha)
+    return distillation_loss*(T*T * 2.0 + alpha) + student_loss*(1.-alpha)
 ```
 
 ## Experiment
