@@ -42,7 +42,7 @@ def distillation_loss(student_scores, targets, teacher_scores, T, alpha):
 ```
 
 ## Experiment
-본 실험은 CIFAR10 데이터셋으로 진행하였다. knowledge distillation을 적용한 ResNet34, knowledge distillation을 적용하지 않은 ResNet34 그리고 Teacher Model로 사용한 ViT의 Train acc/loss, test acc/loss를 통해 성능 비교를 진행하였다. student model로 사용한 ResNet34가 Teacher Model의 성능을 뛰어넘는지 그리고 기존의 knowledge distillation을 적용하지 않고 학습한 ResNet34 보다 성능이 높은지 비교 실험을 진행하였다.augmentation의 경우 비교 실험을 위해 적용하지 않았으며, optimizer의 경우 SGD를 사용하였다. (Adam의 경우 2 epoch 내에 수렴하여 비교 실험을 위해 SGD를 )
+본 실험은 CIFAR10 데이터셋으로 진행하였다. knowledge distillation을 적용한 ResNet34, knowledge distillation을 적용하지 않은 ResNet34 그리고 Teacher Model로 사용한 ViT의 Train acc/loss, test acc/loss를 통해 성능 비교를 진행하였다. student model로 사용한 ResNet34가 Teacher Model의 성능을 뛰어넘는지 그리고 기존의 knowledge distillation을 적용하지 않고 학습한 ResNet34 보다 성능이 높은지 비교 실험을 진행하였다.augmentation의 경우 비교 실험을 위해 적용하지 않았으며, optimizer의 경우 SGD를 사용하였다. (Adam의 경우 2 epoch 내에 수렴하여 비교 실험을 위해 SGD를 사용)
 
 - Teacher Model : ViT(vit_base_patch16_224) pretrained by ImageNet 
     - Param : 86M
