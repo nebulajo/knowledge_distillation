@@ -54,8 +54,9 @@ def distillation_loss(student_scores, targets, teacher_scores, T, alpha):
 CIFAR10 데이터셋에 대해서 ViT를 Teacher Model로 사용하기 위해서 ViT의 마지막 FC layer의 출력층을 CIFAR10 데이터셋의 클래스 수인 10으로 맞춰줘야 한다.  `nn.Linear(512, 10)` 을 적용하게 되면 해당 레이어의 가중치는 랜덤한 초기 가중치이고, 이는 Student Model(ResNet38)에게 ViT의 ImageNet feature를 전달하는 데에 방해가 될 수 있다고 판단하였다. 따라서 본 실험에서는 nn.Linear에 대해서만 requires_grad=True로 설정해서 finetuining을 진행한 이후 Teacher Model로 사용하였다.
 
 ## Result
-Teacher model인 ViT의 성능을 넘지는 못했지만 규모가 작은 ResNet34 임에도 ViT와 견줄 정도의 성능을 보이는 듯하다. 하지만 실제로 모델을 사용할 때는 ViT와 같은 규모가 큰 모델을 finetuining 하는 것이 더 바람직한 것으로 판단된다.
-<img width="626" alt="스크린샷 2023-04-05 오후 3 45 08" src="https://user-images.githubusercontent.com/126544082/230002047-49e5d99b-8e0d-43b6-9d44-1a929c636b64.png">
+Teacher model인 ViT의 성능을 넘지는 못했지만 규모가 작은 ResNet34 임에도 ViT와 견줄 정도의 성능을 보이는 듯하다. 하지만 실제로 모델을 사용할 때는 ViT와 같은 규모가 큰 모델을 finetuining 하는 것이 더 바람직한 것으로 판단된다. 임베디드 디바이스와 같이 소형화 기기를 위한 경령화를 진행해야하는 경우 사용할 때 유용할 것으로 보인다. Teacher Model 정도의 성능을 포기하더라도 규모가 작은 소형화 모델이 필요한 경우 해당 방법을 사용하는 것이 좋을 것이다. 실제 실험에서도 ResNet34만을 학습하는 경우보다 knowledge distillation을 통해 학습한 결과가 좋은 것으로 나타났다. 
+
+<img width="724" alt="스크린샷 2023-04-05 오후 8 04 16" src="https://user-images.githubusercontent.com/126544082/230062575-9faadbab-77fb-4374-8c78-f258a411118d.png">
 
 ### reference
 * https://deep-learning-study.tistory.com/700
